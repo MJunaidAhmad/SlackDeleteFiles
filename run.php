@@ -46,7 +46,10 @@
     $body = $list->getBody();
     $responseList = json_decode($body, true);
     print('Deleting one by one.<br>');
-    foreach ($responseList['files'] as $file) {
+	$totalCount=0;
+	$totalSize=0;	
+   foreach ($responseList['files'] as $file) {
+		
         try {
             $res = $client->request('GET', 'https://slack.com/api/files.delete?token='.$_POST['token'].'&file=' . $file['id']);
         } catch (\GuzzleHttp\Exception\ClientException $e) {
@@ -58,7 +61,9 @@
 
         if ($response['ok'] == true) {
             print($responseToken['user'] . '\'s File ' . $file['name'] . ' has been deleted.<br>');
-        } else {
+        $totalCount++;
+		$totalSize=intval($file['size'])+$totalSize;
+		} else {
           if($response['error']!="file_not_found") {
               print('Unable to delete ' . $responseToken['user'] . '\'s File ' . $file['name'] . '.<br>');
               print("Reason:" .$response['error'] . '.<br>');
@@ -67,6 +72,7 @@
           }
         }
     }
-
+  print("Total Files Deleted: " .$totalCount. '.<br>');
+  print("Total Space Released: " .$totalSize/1000000.0 .' MB\'s .<br>');
 }
 ?>
