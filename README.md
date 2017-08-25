@@ -1,6 +1,10 @@
 # SlackDeleteFiles
 
+
 Simple php code which deletes your slack files given date and lagecy token.
+
+Pre-Req:
+Please install composer on your system.
 
 Installation Step: 
 1) Download zip file of this repo, extract it in some directory.
