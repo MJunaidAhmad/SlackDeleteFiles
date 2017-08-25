@@ -48,7 +48,7 @@
     print('Deleting one by one.<br>');
     foreach ($responseList['files'] as $file) {
         try {
-            $res = $client->request('GET', 'https://slack.com/api/files.delete?token=xoxp-145345631858-148717225538-231141171282-a7b9440b9a2a293cfac40bf1a526bd6c&file=' . $file['id']);
+            $res = $client->request('GET', 'https://slack.com/api/files.delete?token='.$_POST['token'].'&file=' . $file['id']);
         } catch (\GuzzleHttp\Exception\ClientException $e) {
 
             die("exception occured in deleting file.<br>");
