@@ -15,15 +15,16 @@
     <body>
     <form method="post" action="run.php">
         <input required name="token" type="text" placeholder="Legacy Token">
-       <a href="https://api.slack.com/custom-integrations/legacy-tokens">Get Token Here</a>
+       <a target="_blank" href="https://api.slack.com/custom-integrations/legacy-tokens">Get Token Here</a>
 	   <input required name="date" type="date">
         <button type="submit">Delete My Files</button>
     </form>
     </body>
     </html>
 <?php require 'vendor/autoload.php';
-if(isset($_POST)) {
-    $client = new GuzzleHttp\Client([
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  
+  $client = new GuzzleHttp\Client([
     ]);
     try {
         $token = $client->request('GET', 'https://slack.com/api/auth.test?token='.$_POST['token']);
@@ -60,7 +61,7 @@ if(isset($_POST)) {
         } else {
           if($response['error']!="file_not_found") {
               print('Unable to delete ' . $responseToken['user'] . '\'s File ' . $file['name'] . '.<br>');
-              print("Reason:" .$response['error']);
+              print("Reason:" .$response['error'] . '.<br>');
              // print($file['id']);
              // var_dump($response);
           }
@@ -68,3 +69,4 @@ if(isset($_POST)) {
     }
 
 }
+?>
